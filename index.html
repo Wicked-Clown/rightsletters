@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Rights Hub – Free Deposit Dispute Letter Generator</title>
+  <meta name="description" content="Generate a free deposit dispute letter in minutes. Built on proven UK legal templates. For tenants challenging unfair deductions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D1B2A;
+      --surface:   #142032;
+      --surface2:  #1C2E42;
+      --border:    #243A52;
+      --accent:    #F5C518;
+      --accent-dk: #C49A0F;
+      --text:      #EDF2F7;
+      --muted:     #7A94AD;
+      --red:       #E53E3E;
+      --green:     #38A169;
+      --radius:    10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid rgba(245, 197, 24, 0.3);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+
+    /* ── PROOF STRIP ── */
+    .proof {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 52px;
+    }
+
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .proof-item svg { flex-shrink: 0; }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      max-width: 680px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 20%;
+    }
+
+    /* Step header */
+    .step-header {
+      padding: 28px 32px 0;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .step-sub {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    /* Form body */
+    .step-body {
+      padding: 24px 32px 28px;
+    }
+
+    /* Steps */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    /* Amount input */
+    .amount-wrap {
+      position: relative;
+      margin-top: 8px;
+    }
+
+    .amount-prefix {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    input[type="number"],
+    input[type="email"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 14px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    input[type="number"].amount-input { padding-left: 36px; }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.12);
+    }
+
+    textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+    /* Checkbox grid */
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+
+    .check-item:hover { border-color: var(--accent); }
+
+    .check-item.selected {
+      border-color: var(--accent);
+      background: rgba(245, 197, 24, 0.08);
+    }
+
+    .check-item input[type="checkbox"] { display: none; }
+
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .check-item.selected .check-box {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .check-tick {
+      display: none;
+      color: #0D1B2A;
+    }
+
+    .check-item.selected .check-tick { display: block; }
+
+    .check-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Char counter */
+    .field-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .field-hint { font-size: 0.8rem; color: var(--muted); }
+    .char-count { font-size: 0.8rem; color: var(--muted); }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: var(--accent);
+      color: #0D1B2A;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { background: var(--accent-dk); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-back {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover { border-color: var(--muted); color: var(--text); }
+
+    /* Error state */
+    .field-error {
+      font-size: 0.8rem;
+      color: #FC8181;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .has-error input,
+    .has-error textarea {
+      border-color: var(--red);
+    }
+
+    /* ── SUCCESS ── */
+    .success-state {
+      display: none;
+      padding: 52px 32px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(56, 161, 105, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .success-state h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    .success-state p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 360px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .how h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 580px) { .steps-row { grid-template-columns: 1fr; } }
+
+    .step-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+    }
+
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .step-tile h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-tile p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      max-width: 680px;
+      margin: 0 auto 64px;
+      padding: 16px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── LOADING ── */
+    .btn-primary.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #0D1B2A;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      display: none;
+    }
+
+    .btn-primary.loading .spinner { display: block; }
+    .btn-primary.loading .btn-text { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">UK Rights<span>Hub</span></div>
+    <a href="#how-it-works">How it works</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="#F5C518"/></svg>
+      Free for early users
+    </div>
+    <h1>Your landlord is keeping<br /><em>your money.</em> Here's what to send them.</h1>
+    <p>Answer a few questions and we'll generate a formal deposit dispute letter — built on proven UK legal templates, structured, cited, and ready to send. Free.</p>
+    <div class="proof">
+      <div class="proof-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Takes 2 minutes
+      </div>
+      <div class="proof-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        UK law referenced
+      </div>
+      <div class="proof-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        No solicitor needed
+      </div>
+      <div class="proof-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Free during beta
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="card">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+      <!-- STEP 1 -->
+      <div class="step active" id="step1">
+        <div class="step-header">
+          <div class="step-label">Step 1 of 5</div>
+          <div class="step-title">What is the landlord claiming?</div>
+          <div class="step-sub">Select everything that applies to your situation.</div>
+        </div>
+        <div class="step-body">
+          <div class="check-grid" id="claimsGrid">
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Cleaning" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Professional cleaning</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Damage" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Damage to property</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Redecoration" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Redecoration</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Rent arrears" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Rent arrears</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Missing items" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Missing items</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="claims" value="Other" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Something else</span>
+            </label>
+          </div>
+          <div class="field-error" id="claimsError">Please select at least one reason.</div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="nextStep(1)">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" id="step2">
+        <div class="step-header">
+          <div class="step-label">Step 2 of 5</div>
+          <div class="step-title">How much are they deducting?</div>
+          <div class="step-sub">Enter the total amount the landlord is trying to keep.</div>
+        </div>
+        <div class="step-body">
+          <div class="amount-wrap" id="amountField">
+            <span class="amount-prefix">£</span>
+            <input type="number" class="amount-input" id="amountInput" placeholder="0.00" min="1" step="0.01" />
+          </div>
+          <div class="field-error" id="amountError">Please enter the amount being deducted.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="prevStep(2)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(2)">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step" id="step3">
+        <div class="step-header">
+          <div class="step-label">Step 3 of 5</div>
+          <div class="step-title">Why do you think it's unfair?</div>
+          <div class="step-sub">Tell us what happened in your own words. Don't worry about legal language.</div>
+        </div>
+        <div class="step-body">
+          <div id="reasonField">
+            <textarea id="reasonInput" placeholder="e.g. The flat was professionally cleaned before I left and I have receipts to prove it. The carpets were in the same condition as when I moved in..." maxlength="1500" oninput="updateCharCount()"></textarea>
+            <div class="field-meta">
+              <span class="field-hint">More detail = stronger letter</span>
+              <span class="char-count" id="charCount">0 / 1500</span>
+            </div>
+          </div>
+          <div class="field-error" id="reasonError">Please describe why the deduction is unfair (50 characters minimum).</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="prevStep(3)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(3)">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step" id="step4">
+        <div class="step-header">
+          <div class="step-label">Step 4 of 5</div>
+          <div class="step-title">What evidence do you have?</div>
+          <div class="step-sub">Select anything you have — you don't need all of these.</div>
+        </div>
+        <div class="step-body">
+          <div class="check-grid">
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="Move-in inventory" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Move-in inventory</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="Move-out photos or video" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Move-out photos or video</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="Cleaning receipts" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Cleaning receipts</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="Emails or messages with landlord" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Emails or messages</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="Tenancy agreement" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Tenancy agreement</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" name="evidence" value="None" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">None yet</span>
+            </label>
+          </div>
+          <div class="field-error" id="evidenceError">Please select at least one option.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="prevStep(4)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(4)">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step" id="step5">
+        <div class="step-header">
+          <div class="step-label">Step 5 of 5</div>
+          <div class="step-title">Where should we send your letter?</div>
+          <div class="step-sub">We'll email you a personalised dispute letter within a few hours.</div>
+        </div>
+        <div class="step-body">
+          <div id="emailField">
+            <input type="email" id="emailInput" placeholder="your@email.com" />
+          </div>
+          <div class="field-error" id="emailError">Please enter a valid email address.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="prevStep(5)">← Back</button>
+            <button class="btn-primary" id="submitBtn" onclick="submitForm()">
+              <span class="btn-text">Generate My Letter →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#38A169" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2>You're all set.</h2>
+        <p>We've received your details. Your personalised deposit dispute letter will be in your inbox within a few hours. Check your spam folder if you don't see it.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how-it-works">
+    <div class="section-label">How it works</div>
+    <h2>Three steps to challenge your landlord</h2>
+    <div class="steps-row">
+      <div class="step-tile">
+        <div class="step-num">1</div>
+        <h3>Tell us your situation</h3>
+        <p>Answer five short questions about what your landlord is claiming and why you disagree.</p>
+      </div>
+      <div class="step-tile">
+        <div class="step-num">2</div>
+        <h3>We generate your letter</h3>
+        <p>Your answers are merged into a proven UK legal template, citing the Tenancy Deposit Protection Act and your deposit scheme's rules.</p>
+      </div>
+      <div class="step-tile">
+        <div class="step-num">3</div>
+        <h3>Send it yourself</h3>
+        <p>Review the letter, then send it directly to your landlord or submit it to your deposit scheme. You stay in control.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer" style="max-width:680px; padding:16px 32px; margin: 0 auto 64px;">
+    <strong>Not legal advice.</strong> UK Rights Hub generates template letters for your own use and review. We are not a law firm and this is not legal advice. If your dispute involves a large sum or complex circumstances, consider seeking advice from Shelter, Citizens Advice, or a solicitor.
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 UK Rights Hub &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </footer>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    function updateProgress() {
+      const pct = (currentStep / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function toggleCheck(el) {
+      el.classList.toggle('selected');
+      const cb = el.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+    }
+
+    function getChecked(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(el => el.value);
+    }
+
+    function showError(id, show) {
+      document.getElementById(id).style.display = show ? 'block' : 'none';
+    }
+
+    function updateCharCount() {
+      const val = document.getElementById('reasonInput').value;
+      document.getElementById('charCount').textContent = val.length + ' / 1500';
+    }
+
+    function nextStep(from) {
+      // Validate
+      if (from === 1) {
+        const checked = getChecked('claims');
+        if (checked.length === 0) { showError('claimsError', true); return; }
+        showError('claimsError', false);
+      }
+      if (from === 2) {
+        const val = document.getElementById('amountInput').value;
+        if (!val || parseFloat(val) <= 0) { showError('amountError', true); return; }
+        showError('amountError', false);
+      }
+      if (from === 3) {
+        const val = document.getElementById('reasonInput').value.trim();
+        if (val.length < 50) { showError('reasonError', true); return; }
+        showError('reasonError', false);
+      }
+      if (from === 4) {
+        const checked = getChecked('evidence');
+        if (checked.length === 0) { showError('evidenceError', true); return; }
+        showError('evidenceError', false);
+      }
+
+      document.getElementById('step' + from).classList.remove('active');
+      currentStep = from + 1;
+      document.getElementById('step' + currentStep).classList.add('active');
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function prevStep(from) {
+      document.getElementById('step' + from).classList.remove('active');
+      currentStep = from - 1;
+      document.getElementById('step' + currentStep).classList.add('active');
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    async function submitForm() {
+      const email = document.getElementById('emailInput').value.trim();
+      if (!isValidEmail(email)) { showError('emailError', true); return; }
+      showError('emailError', false);
+
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading');
+
+      const payload = {
+        email,
+        claims:   getChecked('claims').join(', '),
+        amount:   '£' + document.getElementById('amountInput').value,
+        reason:   document.getElementById('reasonInput').value.trim(),
+        evidence: getChecked('evidence').join(', '),
+      };
+
+      try {
+        // ── REPLACE xgobzzzg with your actual Formspree form ID ──
+        const res = await fetch('https://formspree.io/f/xgobzzzg', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          // Hide all steps, show success
+          document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+          document.getElementById('successState').style.display = 'block';
+          document.getElementById('progressFill').style.width = '100%';
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (e) {
+        btn.classList.remove('loading');
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    }
+
+    // Init
+    updateProgress();
+  </script>
+</body>
+</html>
