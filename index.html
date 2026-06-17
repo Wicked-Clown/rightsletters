@@ -131,6 +131,43 @@
 
     .proof-item svg { flex-shrink: 0; }
 
+    /* ── PATH PICKER ── */
+    .path-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 480px) { .path-grid { grid-template-columns: 1fr; } }
+
+    .path-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+
+    .path-card:hover { border-color: var(--accent); }
+
+    .path-card.selected {
+      border-color: var(--accent);
+      background: rgba(245, 197, 24, 0.08);
+    }
+
+    .path-card.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .path-emoji { font-size: 1.5rem; margin-bottom: 8px; }
+    .path-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .path-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+
     /* ── FORM CARD ── */
     .form-card {
       max-width: 680px;
@@ -536,8 +573,8 @@
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="#F5C518"/></svg>
       Free for early users
     </div>
-    <h1>Your landlord is keeping<br /><em>your money.</em> Here's what to send them.</h1>
-    <p>Answer a few questions and we'll generate a formal deposit dispute letter — built on proven UK legal templates, structured, cited, and ready to send. Free.</p>
+    <h1>Know your rights.<br /><em>Fight back with the right letter.</em></h1>
+    <p>Answer a few questions about your situation — landlord, workplace, or otherwise — and we'll generate a formal letter built on proven UK legal templates, structured, cited, and ready to send. Free.</p>
     <div class="proof">
       <div class="proof-item">
         <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -563,15 +600,57 @@
     <div class="card">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-      <!-- STEP 1 -->
+      <!-- STEP 1: PICKER -->
       <div class="step active" id="step1">
         <div class="step-header">
-          <div class="step-label">Step 1 of 5</div>
+          <div class="step-label">Step 1 of 6</div>
+          <div class="step-title">What's your situation?</div>
+          <div class="step-sub">Choose the option that matches what's happening.</div>
+        </div>
+        <div class="step-body">
+          <div class="path-grid">
+            <div class="path-card" onclick="selectPath('deposit', this)">
+              <div class="path-emoji">🏠</div>
+              <div class="path-title">Landlord / Tenant Issue</div>
+              <div class="path-desc">Deposit disputes, illegal eviction, entry without notice</div>
+            </div>
+            <div class="path-card" onclick="selectPath('grievance', this)">
+              <div class="path-emoji">💼</div>
+              <div class="path-title">Workplace Issue</div>
+              <div class="path-desc">Bullying, unpaid wages, unfair treatment, discrimination</div>
+            </div>
+            <div class="path-card disabled">
+              <div class="path-emoji">📋</div>
+              <div class="path-title">Section 8 Response</div>
+              <div class="path-desc">Coming soon</div>
+            </div>
+            <div class="path-card disabled">
+              <div class="path-emoji">🔁</div>
+              <div class="path-title">Subscription Cancellation</div>
+              <div class="path-desc">Coming soon</div>
+            </div>
+          </div>
+          <div class="field-error" id="pathError">Please choose one of the options above.</div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="nextFromPicker()">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════ DEPOSIT PATH ═══════════ -->
+
+      <!-- D2 -->
+      <div class="step" id="stepD2">
+        <div class="step-header">
+          <div class="step-label">Step 2 of 6</div>
           <div class="step-title">What is the landlord claiming?</div>
           <div class="step-sub">Select everything that applies to your situation.</div>
         </div>
         <div class="step-body">
-          <div class="check-grid" id="claimsGrid">
+          <div class="check-grid">
             <label class="check-item" onclick="toggleCheck(this, event)">
               <input type="checkbox" name="claims" value="Cleaning" />
               <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
@@ -605,7 +684,8 @@
           </div>
           <div class="field-error" id="claimsError">Please select at least one reason.</div>
           <div class="btn-row">
-            <button class="btn-primary" onclick="nextStep(1)">
+            <button class="btn-back" onclick="goToStep('step1')">← Back</button>
+            <button class="btn-primary" onclick="nextD2()">
               <span class="btn-text">Continue →</span>
               <div class="spinner"></div>
             </button>
@@ -613,22 +693,22 @@
         </div>
       </div>
 
-      <!-- STEP 2 -->
-      <div class="step" id="step2">
+      <!-- D3 -->
+      <div class="step" id="stepD3">
         <div class="step-header">
-          <div class="step-label">Step 2 of 5</div>
+          <div class="step-label">Step 3 of 6</div>
           <div class="step-title">How much are they deducting?</div>
           <div class="step-sub">Enter the total amount the landlord is trying to keep.</div>
         </div>
         <div class="step-body">
-          <div class="amount-wrap" id="amountField">
+          <div class="amount-wrap">
             <span class="amount-prefix">£</span>
             <input type="number" class="amount-input" id="amountInput" placeholder="0.00" min="1" step="0.01" />
           </div>
           <div class="field-error" id="amountError">Please enter the amount being deducted.</div>
           <div class="btn-row">
-            <button class="btn-back" onclick="prevStep(2)">← Back</button>
-            <button class="btn-primary" onclick="nextStep(2)">
+            <button class="btn-back" onclick="goToStep('stepD2')">← Back</button>
+            <button class="btn-primary" onclick="nextD3()">
               <span class="btn-text">Continue →</span>
               <div class="spinner"></div>
             </button>
@@ -636,25 +716,23 @@
         </div>
       </div>
 
-      <!-- STEP 3 -->
-      <div class="step" id="step3">
+      <!-- D4 -->
+      <div class="step" id="stepD4">
         <div class="step-header">
-          <div class="step-label">Step 3 of 5</div>
+          <div class="step-label">Step 4 of 6</div>
           <div class="step-title">Why do you think it's unfair?</div>
           <div class="step-sub">Tell us what happened in your own words. Don't worry about legal language.</div>
         </div>
         <div class="step-body">
-          <div id="reasonField">
-            <textarea id="reasonInput" placeholder="e.g. The flat was professionally cleaned before I left and I have receipts to prove it. The carpets were in the same condition as when I moved in..." maxlength="1500" oninput="updateCharCount()"></textarea>
-            <div class="field-meta">
-              <span class="field-hint">More detail = stronger letter</span>
-              <span class="char-count" id="charCount">0 / 1500</span>
-            </div>
+          <textarea id="reasonInput" placeholder="e.g. The flat was professionally cleaned before I left and I have receipts to prove it. The carpets were in the same condition as when I moved in..." maxlength="1500" oninput="updateCharCount('reasonInput','charCountD')"></textarea>
+          <div class="field-meta">
+            <span class="field-hint">More detail = stronger letter</span>
+            <span class="char-count" id="charCountD">0 / 1500</span>
           </div>
           <div class="field-error" id="reasonError">Please describe why the deduction is unfair (50 characters minimum).</div>
           <div class="btn-row">
-            <button class="btn-back" onclick="prevStep(3)">← Back</button>
-            <button class="btn-primary" onclick="nextStep(3)">
+            <button class="btn-back" onclick="goToStep('stepD3')">← Back</button>
+            <button class="btn-primary" onclick="nextD4()">
               <span class="btn-text">Continue →</span>
               <div class="spinner"></div>
             </button>
@@ -662,10 +740,10 @@
         </div>
       </div>
 
-      <!-- STEP 4 -->
-      <div class="step" id="step4">
+      <!-- D5 -->
+      <div class="step" id="stepD5">
         <div class="step-header">
-          <div class="step-label">Step 4 of 5</div>
+          <div class="step-label">Step 5 of 6</div>
           <div class="step-title">What evidence do you have?</div>
           <div class="step-sub">Select anything you have — you don't need all of these.</div>
         </div>
@@ -704,8 +782,8 @@
           </div>
           <div class="field-error" id="evidenceError">Please select at least one option.</div>
           <div class="btn-row">
-            <button class="btn-back" onclick="prevStep(4)">← Back</button>
-            <button class="btn-primary" onclick="nextStep(4)">
+            <button class="btn-back" onclick="goToStep('stepD4')">← Back</button>
+            <button class="btn-primary" onclick="nextD5()">
               <span class="btn-text">Continue →</span>
               <div class="spinner"></div>
             </button>
@@ -713,21 +791,196 @@
         </div>
       </div>
 
-      <!-- STEP 5 -->
-      <div class="step" id="step5">
+      <!-- D6 (email) -->
+      <div class="step" id="stepD6">
         <div class="step-header">
-          <div class="step-label">Step 5 of 5</div>
+          <div class="step-label">Step 6 of 6</div>
           <div class="step-title">Where should we send your letter?</div>
           <div class="step-sub">We'll email you a personalised dispute letter within a few hours.</div>
         </div>
         <div class="step-body">
-          <div id="emailField">
-            <input type="email" id="emailInput" placeholder="your@email.com" />
-          </div>
-          <div class="field-error" id="emailError">Please enter a valid email address.</div>
+          <input type="email" id="emailInputD" placeholder="your@email.com" />
+          <div class="field-error" id="emailErrorD">Please enter a valid email address.</div>
           <div class="btn-row">
-            <button class="btn-back" onclick="prevStep(5)">← Back</button>
-            <button class="btn-primary" id="submitBtn" onclick="submitForm()">
+            <button class="btn-back" onclick="goToStep('stepD5')">← Back</button>
+            <button class="btn-primary" id="submitBtnD" onclick="submitDeposit()">
+              <span class="btn-text">Generate My Letter →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════ GRIEVANCE PATH ═══════════ -->
+
+      <!-- G2 -->
+      <div class="step" id="stepG2">
+        <div class="step-header">
+          <div class="step-label">Step 2 of 6</div>
+          <div class="step-title">What is the problem?</div>
+          <div class="step-sub">Select everything that applies to your situation.</div>
+        </div>
+        <div class="step-body">
+          <div class="check-grid">
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Bullying or harassment" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Bullying or harassment</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Unpaid wages or deductions" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Unpaid wages or deductions</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Unfair disciplinary action" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Unfair disciplinary action</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Discrimination" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Discrimination</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Denied flexible working" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Denied flexible working</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Health and safety concern" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Health & safety concern</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="problem" value="Other" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Something else</span>
+            </label>
+          </div>
+          <div class="field-error" id="problemError">Please select at least one option.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep('step1')">← Back</button>
+            <button class="btn-primary" onclick="nextG2()">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- G3 -->
+      <div class="step" id="stepG3">
+        <div class="step-header">
+          <div class="step-label">Step 3 of 6</div>
+          <div class="step-title">What happened?</div>
+          <div class="step-sub">Tell us what happened in your own words. Don't worry about legal language.</div>
+        </div>
+        <div class="step-body">
+          <textarea id="whatInput" placeholder="e.g. My manager has repeatedly raised their voice at me in front of colleagues and made comments about my performance that aren't accurate..." maxlength="1500" oninput="updateCharCount('whatInput','charCountG')"></textarea>
+          <div class="field-meta">
+            <span class="field-hint">More detail = stronger letter</span>
+            <span class="char-count" id="charCountG">0 / 1500</span>
+          </div>
+          <div class="field-error" id="whatError">Please describe what happened (50 characters minimum).</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep('stepG2')">← Back</button>
+            <button class="btn-primary" onclick="nextG3()">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- G4 -->
+      <div class="step" id="stepG4">
+        <div class="step-header">
+          <div class="step-label">Step 4 of 6</div>
+          <div class="step-title">When did this happen?</div>
+          <div class="step-sub">Approximate dates are fine if you're not sure of exact ones.</div>
+        </div>
+        <div class="step-body">
+          <div class="date-row">
+            <div>
+              <label for="dateStart">When did it start?</label>
+              <input type="text" id="dateStart" placeholder="e.g. March 2026" />
+            </div>
+            <div>
+              <label for="dateLatest">Most recent incident</label>
+              <input type="text" id="dateLatest" placeholder="e.g. This week" />
+            </div>
+          </div>
+          <div class="field-error" id="dateError">Please give at least an approximate timeframe.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep('stepG3')">← Back</button>
+            <button class="btn-primary" onclick="nextG4()">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- G5 -->
+      <div class="step" id="stepG5">
+        <div class="step-header">
+          <div class="step-label">Step 5 of 6</div>
+          <div class="step-title">What outcome are you seeking?</div>
+          <div class="step-sub">Select everything you'd like the letter to ask for.</div>
+        </div>
+        <div class="step-body">
+          <div class="check-grid">
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="outcome" value="A formal investigation" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">A formal investigation</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="outcome" value="Missing wages paid" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Missing wages paid</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="outcome" value="A formal apology" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">A formal apology</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="outcome" value="Reasonable adjustments" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Reasonable adjustments</span>
+            </label>
+            <label class="check-item" onclick="toggleCheck(this, event)">
+              <input type="checkbox" name="outcome" value="Other" />
+              <div class="check-box"><svg class="check-tick" width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="#0D1B2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+              <span class="check-label">Something else</span>
+            </label>
+          </div>
+          <div class="field-error" id="outcomeError">Please select at least one option.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep('stepG4')">← Back</button>
+            <button class="btn-primary" onclick="nextG5()">
+              <span class="btn-text">Continue →</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- G6 (email) -->
+      <div class="step" id="stepG6">
+        <div class="step-header">
+          <div class="step-label">Step 6 of 6</div>
+          <div class="step-title">Where should we send your letter?</div>
+          <div class="step-sub">We'll email you a personalised grievance letter within a few hours.</div>
+        </div>
+        <div class="step-body">
+          <input type="email" id="emailInputG" placeholder="your@email.com" />
+          <div class="field-error" id="emailErrorG">Please enter a valid email address.</div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep('stepG5')">← Back</button>
+            <button class="btn-primary" id="submitBtnG" onclick="submitGrievance()">
               <span class="btn-text">Generate My Letter →</span>
               <div class="spinner"></div>
             </button>
@@ -741,7 +994,7 @@
           <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#38A169" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h2>You're all set.</h2>
-        <p>We've received your details. Your personalised deposit dispute letter will be in your inbox within a few hours. Check your spam folder if you don't see it.</p>
+        <p id="successText">We've received your details. Your personalised letter will be in your inbox within a few hours. Check your spam folder if you don't see it.</p>
       </div>
 
     </div>
@@ -750,22 +1003,22 @@
   <!-- HOW IT WORKS -->
   <section class="how" id="how-it-works">
     <div class="section-label">How it works</div>
-    <h2>Three steps to challenge your landlord</h2>
+    <h2>Three steps to send a formal letter</h2>
     <div class="steps-row">
       <div class="step-tile">
         <div class="step-num">1</div>
         <h3>Tell us your situation</h3>
-        <p>Answer five short questions about what your landlord is claiming and why you disagree.</p>
+        <p>Choose your issue, then answer a few short questions about what's happening and what you'd like to happen next.</p>
       </div>
       <div class="step-tile">
         <div class="step-num">2</div>
         <h3>We generate your letter</h3>
-        <p>Your answers are merged into a proven UK legal template, citing the Tenancy Deposit Protection Act and your deposit scheme's rules.</p>
+        <p>Your answers are merged into a proven UK legal template, citing the law relevant to your situation.</p>
       </div>
       <div class="step-tile">
         <div class="step-num">3</div>
         <h3>Send it yourself</h3>
-        <p>Review the letter, then send it directly to your landlord or submit it to your deposit scheme. You stay in control.</p>
+        <p>Review the letter, then send it directly. You stay in control of the process.</p>
       </div>
     </div>
   </section>
@@ -800,11 +1053,6 @@
         <div style="font-weight:700;font-size:0.95rem;color:#EDF2F7;margin-bottom:6px;">What Employers Cannot Do</div>
         <div style="font-size:0.82rem;color:#7A94AD;line-height:1.5;">Unpaid overtime, illegal deductions, unfair dismissal — know your rights.</div>
       </a>
-      <a href="/blog/fired-from-job-uk-rights.html" style="background:#142032;border:1px solid #243A52;border-radius:12px;padding:20px;text-decoration:none;display:block;" onmouseover="this.style.borderColor='#F5C518'" onmouseout="this.style.borderColor='#243A52'">
-        <div style="font-size:1.4rem;margin-bottom:8px;">📄</div>
-        <div style="font-weight:700;font-size:0.95rem;color:#EDF2F7;margin-bottom:6px;">Fired or Made Redundant?</div>
-        <div style="font-size:0.82rem;color:#7A94AD;line-height:1.5;">Don't sign anything until you've read this — your rights in 2026.</div>
-      </a>
     </div>
   </section>
 
@@ -819,12 +1067,42 @@
   </footer>
 
   <script>
-    let currentStep = 1;
-    const totalSteps = 5;
+    let selectedPath = null; // 'deposit' | 'grievance'
+    let currentStepId = 'step1';
+    const totalSteps = 6;
+
+    const pathSteps = {
+      deposit:   ['step1','stepD2','stepD3','stepD4','stepD5','stepD6'],
+      grievance: ['step1','stepG2','stepG3','stepG4','stepG5','stepG6'],
+    };
 
     function updateProgress() {
-      const pct = (currentStep / totalSteps) * 100;
+      const steps = selectedPath ? pathSteps[selectedPath] : ['step1'];
+      const idx = steps.indexOf(currentStepId);
+      const pct = ((idx + 1) / totalSteps) * 100;
       document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function goToStep(stepId) {
+      document.getElementById(currentStepId).classList.remove('active');
+      document.getElementById(stepId).classList.add('active');
+      currentStepId = stepId;
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectPath(path, el) {
+      document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedPath = path;
+      showError('pathError', false);
+    }
+
+    function nextFromPicker() {
+      if (!selectedPath) { showError('pathError', true); return; }
+      showError('pathError', false);
+      const steps = pathSteps[selectedPath];
+      goToStep(steps[1]);
     }
 
     function toggleCheck(el, event) {
@@ -842,59 +1120,51 @@
       document.getElementById(id).style.display = show ? 'block' : 'none';
     }
 
-    function updateCharCount() {
-      const val = document.getElementById('reasonInput').value;
-      document.getElementById('charCount').textContent = val.length + ' / 1500';
-    }
-
-    function nextStep(from) {
-      // Validate
-      if (from === 1) {
-        const checked = getChecked('claims');
-        if (checked.length === 0) { showError('claimsError', true); return; }
-        showError('claimsError', false);
-      }
-      if (from === 2) {
-        const val = document.getElementById('amountInput').value;
-        if (!val || parseFloat(val) <= 0) { showError('amountError', true); return; }
-        showError('amountError', false);
-      }
-      if (from === 3) {
-        const val = document.getElementById('reasonInput').value.trim();
-        if (val.length < 50) { showError('reasonError', true); return; }
-        showError('reasonError', false);
-      }
-      if (from === 4) {
-        const checked = getChecked('evidence');
-        if (checked.length === 0) { showError('evidenceError', true); return; }
-        showError('evidenceError', false);
-      }
-
-      document.getElementById('step' + from).classList.remove('active');
-      currentStep = from + 1;
-      document.getElementById('step' + currentStep).classList.add('active');
-      updateProgress();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function prevStep(from) {
-      document.getElementById('step' + from).classList.remove('active');
-      currentStep = from - 1;
-      document.getElementById('step' + currentStep).classList.add('active');
-      updateProgress();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function updateCharCount(inputId, countId) {
+      const val = document.getElementById(inputId).value;
+      document.getElementById(countId).textContent = val.length + ' / 1500';
     }
 
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    async function submitForm() {
-      const email = document.getElementById('emailInput').value.trim();
-      if (!isValidEmail(email)) { showError('emailError', true); return; }
-      showError('emailError', false);
+    /* ── DEPOSIT PATH VALIDATION ── */
 
-      const btn = document.getElementById('submitBtn');
+    function nextD2() {
+      const checked = getChecked('claims');
+      if (checked.length === 0) { showError('claimsError', true); return; }
+      showError('claimsError', false);
+      goToStep('stepD3');
+    }
+
+    function nextD3() {
+      const val = document.getElementById('amountInput').value;
+      if (!val || parseFloat(val) <= 0) { showError('amountError', true); return; }
+      showError('amountError', false);
+      goToStep('stepD4');
+    }
+
+    function nextD4() {
+      const val = document.getElementById('reasonInput').value.trim();
+      if (val.length < 50) { showError('reasonError', true); return; }
+      showError('reasonError', false);
+      goToStep('stepD5');
+    }
+
+    function nextD5() {
+      const checked = getChecked('evidence');
+      if (checked.length === 0) { showError('evidenceError', true); return; }
+      showError('evidenceError', false);
+      goToStep('stepD6');
+    }
+
+    async function submitDeposit() {
+      const email = document.getElementById('emailInputD').value.trim();
+      if (!isValidEmail(email)) { showError('emailErrorD', true); return; }
+      showError('emailErrorD', false);
+
+      const btn = document.getElementById('submitBtnD');
       btn.classList.add('loading');
 
       const payload = {
@@ -903,10 +1173,10 @@
         amount:   '£' + document.getElementById('amountInput').value,
         reason:   document.getElementById('reasonInput').value.trim(),
         evidence: getChecked('evidence').join(', '),
+        formType: 'Deposit Dispute Letter',
       };
 
       try {
-        // ── REPLACE xgobzzzg with your actual Formspree form ID ──
         const res = await fetch('https://formspree.io/f/xgobzzzg', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -914,8 +1184,78 @@
         });
 
         if (res.ok) {
-          // Hide all steps, show success
           document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+          document.getElementById('successText').textContent = "We've received your details. Your personalised deposit dispute letter will be in your inbox within a few hours. Check your spam folder if you don't see it.";
+          document.getElementById('successState').style.display = 'block';
+          document.getElementById('progressFill').style.width = '100%';
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (e) {
+        btn.classList.remove('loading');
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    }
+
+    /* ── GRIEVANCE PATH VALIDATION ── */
+
+    function nextG2() {
+      const checked = getChecked('problem');
+      if (checked.length === 0) { showError('problemError', true); return; }
+      showError('problemError', false);
+      goToStep('stepG3');
+    }
+
+    function nextG3() {
+      const val = document.getElementById('whatInput').value.trim();
+      if (val.length < 50) { showError('whatError', true); return; }
+      showError('whatError', false);
+      goToStep('stepG4');
+    }
+
+    function nextG4() {
+      const start = document.getElementById('dateStart').value.trim();
+      const latest = document.getElementById('dateLatest').value.trim();
+      if (!start && !latest) { showError('dateError', true); return; }
+      showError('dateError', false);
+      goToStep('stepG5');
+    }
+
+    function nextG5() {
+      const checked = getChecked('outcome');
+      if (checked.length === 0) { showError('outcomeError', true); return; }
+      showError('outcomeError', false);
+      goToStep('stepG6');
+    }
+
+    async function submitGrievance() {
+      const email = document.getElementById('emailInputG').value.trim();
+      if (!isValidEmail(email)) { showError('emailErrorG', true); return; }
+      showError('emailErrorG', false);
+
+      const btn = document.getElementById('submitBtnG');
+      btn.classList.add('loading');
+
+      const payload = {
+        email,
+        problem:    getChecked('problem').join(', '),
+        what:       document.getElementById('whatInput').value.trim(),
+        dateStart:  document.getElementById('dateStart').value.trim(),
+        dateLatest: document.getElementById('dateLatest').value.trim(),
+        outcome:    getChecked('outcome').join(', '),
+        formType:   'Workplace Grievance Letter',
+      };
+
+      try {
+        const res = await fetch('https://formspree.io/f/mdavjpvb', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+          document.getElementById('successText').textContent = "We've received your details. Your personalised grievance letter will be in your inbox within a few hours. Check your spam folder if you don't see it.";
           document.getElementById('successState').style.display = 'block';
           document.getElementById('progressFill').style.width = '100%';
         } else {
