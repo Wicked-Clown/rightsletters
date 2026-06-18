@@ -474,6 +474,25 @@
 
     @media (max-width: 580px) { .steps-row { grid-template-columns: 1fr; } }
 
+    /* ── MOBILE: get the tool above the fold faster ── */
+    .hero .hero-sub-mobile { display: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 12px 20px; }
+      .hero { padding: 20px 20px 16px; }
+      .badge { margin-bottom: 10px; padding: 4px 10px; font-size: 0.72rem; }
+      .hero h1 { font-size: 1.6rem; line-height: 1.2; margin-bottom: 10px; }
+      .hero > p:not(.hero-sub-mobile) { display: none; }
+      .hero .hero-sub-mobile { display: block; font-size: 0.92rem; color: var(--muted); line-height: 1.4; margin: 0 auto; }
+      .proof { display: none; }
+      .step-header { padding: 14px 18px 0; }
+      .step-title { font-size: 1.05rem; }
+      .step-sub { font-size: 0.82rem; }
+      .step-body { padding: 14px 18px 18px; }
+      .path-card { padding: 12px 10px; }
+      .path-emoji { font-size: 1.25rem; margin-bottom: 4px; }
+    }
+
     .step-tile {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -575,6 +594,7 @@
     </div>
     <h1>Know your rights.<br /><em>Fight back with the right letter.</em></h1>
     <p>Answer a few questions about your situation — landlord, workplace, or otherwise — and we'll generate a formal letter built on proven UK legal templates, structured, cited, and ready to send. Free.</p>
+    <p class="hero-sub-mobile">Free, ready-to-send letter in under 2 minutes.</p>
     <div class="proof">
       <div class="proof-item">
         <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
