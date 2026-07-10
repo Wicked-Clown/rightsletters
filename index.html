@@ -568,6 +568,69 @@
     .btn-primary.loading .btn-text { display: none; }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── NEW HOMEPAGE STRUCTURE ── */
+
+  /* Hero */
+  .site-eyebrow { font-size:0.78rem; font-weight:600; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; }
+  .hero-cta { display:inline-block; background:var(--accent); color:#1A1300; font-weight:700; text-decoration:none; padding:13px 28px; border-radius:8px; margin-top:20px; font-size:0.95rem; transition:opacity 0.2s; }
+  .hero-cta:hover { opacity:0.9; }
+
+  /* Hub cards */
+  .hubs { max-width:1060px; margin:0 auto 64px; padding:0 24px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .hub-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 24px; display:flex; flex-direction:column; }
+  .hub-icon { font-size:1.8rem; margin-bottom:12px; }
+  .hub-card h2 { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--text); margin-bottom:6px; }
+  .hub-desc { font-size:0.85rem; color:var(--muted); margin-bottom:14px; }
+  .hub-list { list-style:none; margin:0 0 20px; padding:0; }
+  .hub-list li { font-size:0.83rem; color:#C7D2E0; padding:4px 0; border-bottom:1px solid var(--border); }
+  .hub-list li:last-child { border-bottom:none; }
+  .hub-list li::before { content:"→ "; color:var(--accent); font-weight:600; }
+  .hub-btn { display:inline-block; margin-top:auto; font-size:0.85rem; font-weight:600; color:var(--accent); text-decoration:none; border:1px solid rgba(245,197,24,0.35); border-radius:6px; padding:8px 16px; transition:background 0.2s; }
+  .hub-btn:hover { background:rgba(245,197,24,0.1); }
+
+  /* Generator cards */
+  .generators-section { max-width:1060px; margin:0 auto 64px; padding:0 24px; }
+  .section-eyebrow { font-size:0.75rem; font-weight:700; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase; text-align:center; margin-bottom:8px; }
+  .section-title { font-family:'DM Serif Display',serif; font-size:1.6rem; color:var(--text); text-align:center; margin-bottom:8px; }
+  .section-sub { font-size:0.9rem; color:var(--muted); text-align:center; margin-bottom:28px; }
+  .gen-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .gen-card { background:var(--surface); border:2px solid var(--border); border-radius:12px; padding:24px 20px; text-decoration:none; display:flex; flex-direction:column; transition:border-color 0.2s; }
+  .gen-card:hover { border-color:var(--accent); }
+  .gen-icon { font-size:1.6rem; margin-bottom:10px; }
+  .gen-title { font-weight:700; font-size:1rem; color:var(--text); margin-bottom:8px; }
+  .gen-desc { font-size:0.82rem; color:var(--muted); line-height:1.5; flex:1; margin-bottom:16px; }
+  .gen-cta { font-size:0.82rem; font-weight:700; color:var(--accent); }
+
+  /* Categorized guides */
+  .guides-section { max-width:1060px; margin:0 auto 64px; padding:0 24px; }
+  .guides-category { margin-bottom:36px; }
+  .guides-category-header { display:flex; align-items:center; gap:10px; font-family:'DM Serif Display',serif; font-size:1.15rem; color:var(--text); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+  .guides-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .guides-grid a { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; text-decoration:none; display:flex; align-items:flex-start; gap:12px; transition:border-color 0.2s; }
+  .guides-grid a:hover { border-color:var(--accent); }
+  .guides-grid .g-emoji { font-size:1.1rem; flex-shrink:0; margin-top:2px; }
+  .guides-grid .g-title { font-weight:600; font-size:0.88rem; color:var(--text); margin-bottom:3px; }
+  .guides-grid .g-desc { font-size:0.78rem; color:var(--muted); line-height:1.4; }
+
+  /* 3-column footer */
+  .footer-inner { max-width:1060px; margin:0 auto; padding:40px 24px 28px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:32px; }
+  .footer-col h4 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); margin-bottom:12px; }
+  .footer-col a { display:block; color:var(--muted); text-decoration:none; font-size:0.82rem; margin-bottom:8px; }
+  .footer-col a:hover { color:var(--text); }
+  .footer-bottom { max-width:1060px; margin:0 auto; padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--muted); }
+  .footer-bottom a { color:var(--accent); text-decoration:none; }
+
+  @media (max-width:760px) {
+    .hubs { grid-template-columns:1fr; }
+    .gen-grid { grid-template-columns:1fr; }
+    .guides-grid { grid-template-columns:1fr; }
+    .footer-inner { grid-template-columns:1fr 1fr; gap:24px; }
+  }
+  @media (max-width:480px) {
+    .footer-inner { grid-template-columns:1fr; }
+    .footer-bottom { flex-direction:column; gap:8px; text-align:center; }
+  }
   </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4JTRBG2020"></script>
@@ -582,41 +645,93 @@
 
   <!-- NAV -->
   <nav>
-    <div class="logo">UK Rights<span>Hub</span></div>
-    <a href="#how-it-works">How it works</a>
+    <a href="/" class="logo" style="text-decoration:none;">UK Rights<span>Hub</span></a>
+    <div style="display:flex;gap:20px;align-items:center;">
+      <a href="/blog/what-landlords-cannot-do-uk.html" style="color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;">🏠 Housing</a>
+      <a href="/blog/fired-from-job-uk-rights.html" style="color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;">💼 Employment</a>
+      <a href="/blog/driving-laws-2026-uk.html" style="color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;">🚗 Driving</a>
+      <a href="#generators" style="background:var(--accent);color:#1A1300;text-decoration:none;font-size:0.82rem;font-weight:700;padding:7px 14px;border-radius:6px;">Free Tools</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="badge">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="#F5C518"/></svg>
-      Free for early users
+    <p class="site-eyebrow">🇬🇧 Free UK Legal Tools</p>
+    <h1>Know your rights.<br /><em>Get the right letter.</em></h1>
+    <p>Free letter generators and legal guides for landlord disputes, workplace problems, and driving issues. Built on UK law. Ready in minutes.</p>
+    <p class="hero-sub-mobile">Free legal letter generators — 2 minutes, no sign-up.</p>
+    <a href="#generators" class="hero-cta">Find a Tool →</a>
+  </section>
+
+  <!-- THREE HUBS -->
+  <section class="hubs">
+    <div class="hub-card">
+      <div class="hub-icon">🏠</div>
+      <h2>Renting & Housing</h2>
+      <p class="hub-desc">Problems with a landlord?</p>
+      <ul class="hub-list">
+        <li>Deposit disputes</li>
+        <li>Illegal eviction</li>
+        <li>Section 8 & Section 21</li>
+        <li>Entry without notice</li>
+      </ul>
+      <a href="/blog/what-landlords-cannot-do-uk.html" class="hub-btn">Explore Housing →</a>
     </div>
-    <h1>Know your rights.<br /><em>Fight back with the right letter.</em></h1>
-    <p>Answer a few questions about your situation — landlord, workplace, or otherwise — and we'll generate a formal letter built on proven UK legal templates, structured, cited, and ready to send. Free.</p>
-    <p class="hero-sub-mobile">Free, ready-to-send letter in under 2 minutes.</p>
-    <div class="proof">
-      <div class="proof-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Takes 2 minutes
-      </div>
-      <div class="proof-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        UK law referenced
-      </div>
-      <div class="proof-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        No solicitor needed
-      </div>
-      <div class="proof-item">
-        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M13 4L6 11l-3-3" stroke="#38A169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Free during beta
-      </div>
+    <div class="hub-card">
+      <div class="hub-icon">💼</div>
+      <h2>Employment</h2>
+      <p class="hub-desc">Problems at work or with benefits?</p>
+      <ul class="hub-list">
+        <li>Grievances & dismissal</li>
+        <li>Continuous service rights</li>
+        <li>Workplace rights 2026</li>
+        <li>Universal Credit MR</li>
+      </ul>
+      <a href="/blog/fired-from-job-uk-rights.html" class="hub-btn">Explore Employment →</a>
+    </div>
+    <div class="hub-card">
+      <div class="hub-icon">🚗</div>
+      <h2>Driving & DVLA</h2>
+      <p class="hub-desc">Driving fines, road law and DVLA.</p>
+      <ul class="hub-list">
+        <li>2026 driving law changes</li>
+        <li>Clean Air Zone fines</li>
+        <li>DVLA guidance</li>
+        <li>PCN appeals</li>
+      </ul>
+      <a href="/blog/driving-laws-2026-uk.html" class="hub-btn">Explore Driving →</a>
+    </div>
+  </section>
+
+  <!-- LETTER GENERATORS -->
+  <section id="generators" class="generators-section">
+    <p class="section-eyebrow">Free Tools</p>
+    <h2 class="section-title">Letter Generators</h2>
+    <p class="section-sub">Answer a few questions. We generate a formal, legally referenced letter — free, in under 2 minutes. No sign-up required.</p>
+    <div class="gen-grid">
+      <a href="#tool" class="gen-card">
+        <div class="gen-icon">🏠</div>
+        <div class="gen-title">Landlord Dispute Letter</div>
+        <div class="gen-desc">Deposit deductions, illegal eviction, entry without notice, harassment. Cites UK tenancy law directly.</div>
+        <div class="gen-cta">Generate Free Letter →</div>
+      </a>
+      <a href="#tool" class="gen-card" onclick="setTimeout(()=>selectPath('grievance',null),100)">
+        <div class="gen-icon">💼</div>
+        <div class="gen-title">Workplace Grievance Letter</div>
+        <div class="gen-desc">Bullying, unpaid wages, unfair dismissal, discrimination. References the Employment Rights Act 1996.</div>
+        <div class="gen-cta">Generate Free Letter →</div>
+      </a>
+      <a href="/uc-mandatory-reconsideration.html" class="gen-card">
+        <div class="gen-icon">📋</div>
+        <div class="gen-title">Universal Credit MR Letter</div>
+        <div class="gen-desc">DWP sanctioned or cut your UC? Challenge it with a formal Mandatory Reconsideration request — free.</div>
+        <div class="gen-cta">Generate Free Letter →</div>
+      </a>
     </div>
   </section>
 
   <!-- FORM -->
-  <div class="form-card">
+  <div class="form-card" id="tool">
     <div class="card">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
@@ -1035,10 +1150,44 @@
   </section>
 
   <!-- GUIDES -->
-  <section style="max-width:680px;margin:0 auto 64px;padding:0 24px;">
-    <p style="font-size:0.75rem;font-weight:600;color:#F5C518;letter-spacing:0.08em;text-transform:uppercase;text-align:center;margin-bottom:12px;">Free Guides</p>
-    <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;text-align:center;margin-bottom:28px;color:#EDF2F7;">Know Your Rights</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <section class="guides-section">
+    <p class="section-eyebrow">Free Guides</p>
+    <h2 class="section-title" style="margin-bottom:40px;">Know Your Rights</h2>
+
+    <!-- Housing -->
+    <div class="guides-category">
+      <div class="guides-category-header">🏠 Renting & Housing</div>
+      <div class="guides-grid">
+        <a href="/blog/what-landlords-cannot-do-uk.html"><div class="g-emoji">🚫</div><div><div class="g-title">What Landlords Cannot Do</div><div class="g-desc">Rent increases, deposits, repairs, pets — your full rights in 2026.</div></div></a>
+        <a href="/blog/section-21-abolished-uk.html"><div class="g-emoji">📜</div><div><div class="g-title">Section 21 Is Gone — What Now?</div><div class="g-desc">How landlords are using Section 8 loopholes in 2026.</div></div></a>
+        <a href="/blog/section-8-notice-uk.html"><div class="g-emoji">📋</div><div><div class="g-title">Received a Section 8 Notice?</div><div class="g-desc">What it means, whether it's valid, and what to do.</div></div></a>
+        <a href="/blog/deposit-dispute-letter-uk.html"><div class="g-emoji">💰</div><div><div class="g-title">Deposit Dispute Guide</div><div class="g-desc">How to challenge unfair deductions from your tenancy deposit.</div></div></a>
+        <a href="/blog/illegal-eviction-uk.html"><div class="g-emoji">🚨</div><div><div class="g-title">Illegal Eviction UK</div><div class="g-desc">What it is, your emergency rights, and what to do right now.</div></div></a>
+        <a href="/blog/landlord-entering-without-notice-uk.html"><div class="g-emoji">🔑</div><div><div class="g-title">Landlord Entry Without Notice</div><div class="g-desc">Your right to quiet enjoyment and when landlords can enter.</div></div></a>
+      </div>
+    </div>
+
+    <!-- Employment -->
+    <div class="guides-category">
+      <div class="guides-category-header">💼 Employment</div>
+      <div class="guides-grid">
+        <a href="/blog/what-employers-cannot-do-uk.html"><div class="g-emoji">⚖️</div><div><div class="g-title">What Employers Cannot Do</div><div class="g-desc">Unpaid overtime, illegal deductions, unfair treatment — know your limits.</div></div></a>
+        <a href="/blog/fired-from-job-uk-rights.html"><div class="g-emoji">⚠️</div><div><div class="g-title">Just Been Fired? Read This First</div><div class="g-desc">What not to sign and the mistakes that cost thousands.</div></div></a>
+        <a href="/blog/continuous-service-unfair-dismissal-uk.html"><div class="g-emoji">⏱️</div><div><div class="g-title">Unfair Dismissal: 2 Years → 6 Months</div><div class="g-desc">The qualifying period drops in January 2027 — are you protected?</div></div></a>
+      </div>
+    </div>
+
+    <!-- Driving -->
+    <div class="guides-category">
+      <div class="guides-category-header">🚗 Driving & DVLA</div>
+      <div class="guides-grid">
+        <a href="/blog/driving-laws-2026-uk.html"><div class="g-emoji">🚔</div><div><div class="g-title">10 Driving Laws That Changed in 2026</div><div class="g-desc">AI cameras, speed limiters, EV road tax, Clean Air Zones.</div></div></a>
+        <a href="https://zoneappeal.co.uk" target="_blank" rel="noopener"><div class="g-emoji">📷</div><div><div class="g-title">PCN Appeal Tool → ZoneAppeal.co.uk</div><div class="g-desc">Got a ULEZ or Clean Air Zone fine? Generate a free appeal letter.</div></div></a>
+      </div>
+    </div>
+
+    <!-- old grid placeholder - remove below -->
+    <div style="display:none;">
       <a href="/blog/deposit-dispute-letter-uk.html" style="background:#142032;border:1px solid #243A52;border-radius:12px;padding:20px;text-decoration:none;display:block;" onmouseover="this.style.borderColor='#F5C518'" onmouseout="this.style.borderColor='#243A52'">
         <div style="font-size:1.4rem;margin-bottom:8px;">🏠</div>
         <div style="font-weight:700;font-size:0.95rem;color:#EDF2F7;margin-bottom:6px;">Deposit Dispute Letter</div>
@@ -1089,11 +1238,6 @@
         <div style="font-weight:700;font-size:0.95rem;color:#EDF2F7;margin-bottom:6px;">10 Driving Laws That Changed in 2026</div>
         <div style="font-size:0.82rem;color:#7A94AD;line-height:1.5;">AI cameras, speed limiters, EV road tax and Clean Air Zones — what every UK driver needs to know.</div>
       </a>
-      <a href="/blog/section-21-abolished-uk.html" style="background:#142032;border:1px solid #243A52;border-radius:12px;padding:20px;text-decoration:none;display:block;" onmouseover="this.style.borderColor='#F5C518'" onmouseout="this.style.borderColor='#243A52'">
-        <div style="font-size:1.4rem;margin-bottom:8px;">🚫</div>
-        <div style="font-weight:700;font-size:0.95rem;color:#EDF2F7;margin-bottom:6px;">Section 21 Is Gone — What Now?</div>
-        <div style="font-size:0.82rem;color:#7A94AD;line-height:1.5;">How landlords are using Section 8 loopholes and how to protect yourself.</div>
-      </a>
     </div>
   </section>
 
@@ -1104,7 +1248,36 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 UK Rights Hub &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:12px;">UK Rights<span style="color:var(--accent);">Hub</span></div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.6;">Free legal letter generators and guides for UK residents. General information only — not legal advice.</p>
+      </div>
+      <div class="footer-col">
+        <h4>🏠 Housing</h4>
+        <a href="/blog/what-landlords-cannot-do-uk.html">What Landlords Can't Do</a>
+        <a href="/blog/section-21-abolished-uk.html">Section 21 Abolished</a>
+        <a href="/blog/section-8-notice-uk.html">Section 8 Notice</a>
+        <a href="/blog/deposit-dispute-letter-uk.html">Deposit Disputes</a>
+        <a href="/blog/illegal-eviction-uk.html">Illegal Eviction</a>
+      </div>
+      <div class="footer-col">
+        <h4>💼 Employment</h4>
+        <a href="/blog/what-employers-cannot-do-uk.html">What Employers Can't Do</a>
+        <a href="/blog/fired-from-job-uk-rights.html">Just Been Fired?</a>
+        <a href="/blog/continuous-service-unfair-dismissal-uk.html">Unfair Dismissal 2027</a>
+        <a href="/uc-mandatory-reconsideration.html">Universal Credit MR Letter</a>
+      </div>
+      <div class="footer-col">
+        <h4>🚗 Driving</h4>
+        <a href="/blog/driving-laws-2026-uk.html">Driving Laws 2026</a>
+        <a href="https://zoneappeal.co.uk" target="_blank" rel="noopener">PCN Appeals → ZoneAppeal</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 UK Rights Hub — General information, not legal advice.</span>
+      <span><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></span>
+    </div>
   </footer>
 
   <script>
